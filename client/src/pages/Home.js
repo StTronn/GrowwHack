@@ -9,17 +9,6 @@ import NotFound from "../pages/NotFound";
 import HomeBanner from "../components/HomeBanner";
 import Room  from "../components/RoomCard";
 
-
-
-const ProjectCardGrid = styled.div`
-  display:grid;
-  grid-template-columns: repeat( 4, minmax(250px, 1fr) );
-  grid-gap:10px;
-  align-content:center;
-  justify-content:center;
-
-`
-
 const Home = () => {
   const [myRooms, setMyRooms] = useState([]);
   const [allRooms, setAllRooms] = useState([]);
@@ -84,4 +73,12 @@ const ProjectCard = ({ obj }) => {
   )
 }
 
+const ProjectCardGrid = styled.div`
+  display:grid;
+  grid-template-columns: repeat( 4, minmax(250px, 1fr) );
+  grid-gap:10px;
+  align-content:center;
+  justify-content:center;
+
+`
 export default Home;
