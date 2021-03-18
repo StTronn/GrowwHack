@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import queryString from "query-string";
-import { User } from "../context/user";
-import authRequest from "../utils/authRequest";
 import { useLocation } from "react-router-dom";
-import Banner from "../components/Banner";
+
+import authRequest from "../utils/authRequest";
+
+import Banner from "../components/RoomBanner";
 import Lobby from "../components/Lobby/index";
 import Discuss from "../components/Discuss/index";
+
 import Loading from "./Loading";
 import NotFound from "./NotFound";
 
@@ -15,7 +17,12 @@ const Room = () => {
   const [notFound, setNotFound] = useState(false);
 
   const location = useLocation();
+
+  const user = JSON.parse(localStorage.getItem("user"));
+
+
   useEffect(() => {
+
     const fetchRoom = async () => {
       try {
         const { id } = queryString.parse(location.search);
@@ -34,13 +41,15 @@ const Room = () => {
     fetchRoom();
   }, []);
 
-  const user = JSON.parse(localStorage.getItem("user"));
+
   if (notFound) return <NotFound />;
   if (loading) return <Loading />;
   if (!roomObj) return <Loading />;
+
   const isAdmin = user.username === roomObj.users[0].username;
   const belongsToRoom =
     isAdmin || roomObj.users.some((e) => e.username === user.username);
+
   return (
     <>
       <Banner obj={roomObj} />
@@ -49,5 +58,6 @@ const Room = () => {
     </>
   );
 };
+
 
 export default Room;
