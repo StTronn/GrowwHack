@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+
 import authRequest from "../utils/authRequest";
+
 import Loading from "../pages/Loading";
 import NotFound from "../pages/NotFound";
+
 import HomeBanner from "../components/HomeBanner";
-import Flick from "../components/Flick";
-import { Room } from "../components/Flick";
+import Room  from "../components/RoomCard";
 
 
 
@@ -17,7 +19,6 @@ const ProjectCardGrid = styled.div`
   justify-content:center;
 
 `
-
 
 const Home = () => {
   const [myRooms, setMyRooms] = useState([]);
@@ -49,6 +50,7 @@ const Home = () => {
 
   if (notFound) return <NotFound />;
   if (loading) return <Loading />;
+
   return (
     <div className="pb-16">
       <HomeBanner modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} />
@@ -65,7 +67,6 @@ const Home = () => {
       <ProjectCardGrid className="px-8 py-2">
         {!modalIsOpen && allRooms.map(obj => <ProjectCard obj={obj} />)}
       </ProjectCardGrid>
-      <Flick />
     </div>
   );
 };
@@ -80,7 +81,6 @@ const ProjectCard = ({ obj }) => {
         <h1 className="font-normal">{obj.teamName}</h1>
       </div>
     </div>
-
   )
 }
 
