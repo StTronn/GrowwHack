@@ -23,9 +23,16 @@ const authRequest = async (endpoint, data) => {
     console.log("inside authRequest catch block", err);
     if (
       err.response &&
-      (err.response.status === 403 || err.response.status === 401)
+      (err.response.status === 401)
     )
       window.location.replace("/signin");
+
+    else if (
+      endpoint!=='/auth/updateUser' && //we are calling authRequest inside UpdateUser so if goes wrong same page is reloaded again
+      err.response &&
+      (err.response.status === 403 )
+    )
+      window.location.replace("/updateUser");
     throw err;
   }
 };

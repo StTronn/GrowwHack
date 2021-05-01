@@ -20,9 +20,13 @@ const RoomSchema = new Schema({
   users: [Schema.Types.Mixed],
   link: {
     type: String,
-    default: "",
+    default: ""
   },
   public: { type: Boolean, default: false },
+  link:{
+    type:String,
+    default:""
+  }
 });
 
 RoomSchema.pre("save", async function (next) {

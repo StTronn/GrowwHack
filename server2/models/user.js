@@ -9,9 +9,12 @@ const UserSchema = new Schema({
     required: [true, "Please enter your fullname"],
     trim: true,
   },
+  team: {
+    type: String,
+    default: 'other', //take enum web app other
+  },
   username: {
     type: String,
-    required: [true, "Please enter your username"],
     trim: true,
     unique: true,
   },
@@ -21,6 +24,14 @@ const UserSchema = new Schema({
     trim: true,
     lowercase: true,
     unique: true,
+  },
+  role: {
+    type: String,
+    default: '',
+  },
+  info: {
+    type: String,
+    default: '',
   },
   rooms: {
     type: [Schema.Types.ObjectId],
@@ -34,6 +45,7 @@ const UserSchema = new Schema({
   },
   googleId: {
     type: String,
+    default: "nhp", //empty string may return true in edge cases
   },
   avatar: {
     type: String,
@@ -72,9 +84,9 @@ UserSchema.methods.checkPassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 
-UserSchema.methods.removeRoom = async function (id){
-  this.rooms = _.remove(this.rooms,(room)=>room.id==id);
+UserSchema.methods.removeRoom = async function (id) {
+  this.rooms = _.remove(this.rooms, (room) => room.id == id);
   await this.save();
-}
+};
 
 export default mongoose.model("user", UserSchema);

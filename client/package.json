@@ -21,6 +21,7 @@
     "react-datepicker2": "^3.3.13",
     "react-datetime": "^3.0.4",
     "react-dom": "^17.0.1",
+    "react-google-login": "^5.2.2",
     "react-icons": "^4.1.0",
     "react-modal": "^3.12.1",
     "react-router-dom": "^5.2.0",

@@ -54,6 +54,12 @@ passport.use(
   )
 );
 
+//check if the user has all the required info to 
+const completeInfo = (user) => {
+  if (!user.username || !user.team) return false;
+  return true;
+}
+
 const authenticate = async (req, res, next) => {
   try {
     const token = req.header("Authorization").replace("Bearer ", "");
@@ -72,13 +78,21 @@ const authenticate = async (req, res, next) => {
       });
     }
 
+    const {updatedUser} = req.body
+    if (!completeInfo(updatedUser || user)) {
+      return next({
+        statusCode: 403,
+        message: "Not enough details",
+      });
+    }
+
     // add user to req for next middleware/fn
     req.user = user;
     next();
   } catch (err) {
     console.log(err);
     next({
-      statusCode: 403,
+      statusCode: 401,
       message: "You need to be logged in to to visit this route",
     });
   }

@@ -5,6 +5,9 @@ import SignUp from "./pages/SignUp";
 import JoinRoom from "./pages/JoinRoom";
 import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
+import UpdateUser from "./pages/UpdateUser";
+import WebTeam from "./pages/WebTeam";
+
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
@@ -25,6 +28,12 @@ function App() {
             </Route>
             <Route path="/signup">
               <SignUp />
+            </Route>
+            <Route path="/updateUser">
+              <UpdateUser />
+            </Route>
+            <Route path="/web">
+              <WebTeam />
             </Route>
             <Route path="/">
               <Home />

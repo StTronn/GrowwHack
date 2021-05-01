@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import InviteModal from "../../components/InviteModal";
+import InviteModal from "../InviteModal";
 import authRequest from "../../utils/authRequest";
 import DeleteRoom from "./DeleteRoom";
 import LeaveRoom from "./LeaveRoom";

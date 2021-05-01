@@ -1,66 +1,65 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useFormik } from "formik";
+import authRequest from "../utils/authRequest";
 import { Link, useHistory } from "react-router-dom";
-import { URL } from "../utils/Routes";
 import ClipLoader from "react-spinners/ClipLoader";
 import axios from "axios";
-import GoogleAuth from "../components/GoogleAuth";
+import { URL } from "../utils/Routes";
+import { User } from "../context/user";
 
 const validate = (values) => {
   const errors = {};
   if (!values.username) {
     errors.username = "required";
-  } else if (values.username.length > 15) {
-    errors.username = "Must be 15 characters or less";
   }
 
-  if (!values.password) {
-    errors.password = "required";
-  } else if (values.password !== values.confirmPassword) {
-    errors.password = "Passwords don't match";
+  if (!values.team) {
+    errors.team = "required";
   }
-
-  if (!values.email) {
-    errors.email = "required";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = "Invalid email address";
+  if (!values.info) {
+    errors.info= "required";
   }
-
+  if (!values.role) {
+    errors.role="required";
+  }
   return errors;
 };
 
-const SignUp = () => {
+const UpdateUser = () => {
+  const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
-  const history = useHistory();
+  const { state, dispatch } = useContext(User);
+  const {user} = state;
 
-  const HandleSignUp = async (values) => {
-    const endpoint = "/auth/register";
+
+  const HandleUpdate = async (values) => {
+    const endpoint = "/auth/updateUser";
     const target = URL + endpoint;
     try {
       setLoading(true);
-      const res = await axios.post(target, values);
-      console.log(res.data);
-      history.push("/signin");
+      values.email = user.email; 
+      const res = await authRequest(endpoint, {updatedUser:values});
+      const UpdatedUser = res.data.user;
+      dispatch({ type: "SET_USER", payload: UpdatedUser });
+      history.push("/");
     } catch (err) {
-      console.log("error", err.response.data.message);
-      setErrorMessage(err.response.data.message);
+      console.log("error", err);
+      setErrorMessage(err?.response?.data?.message);
       setLoading(false);
     }
-    setLoading(false);
   };
 
   const formik = useFormik({
     initialValues: {
       username: "",
-      fullname: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      team: "",
+      role:"",
+      info:""
     },
     validate,
     onSubmit: (values) => {
-      HandleSignUp(values);
+      HandleUpdate(values);
     },
   });
   return (
@@ -69,7 +68,7 @@ const SignUp = () => {
         {/* Login Section */}
         <div className="w-full md:w-1/2 bg-nt-gray flex flex-col h-full">
           <div className="flex flex-col justify-center md:justify-start my-auto  md:pt-0 px-8 md:px-24 lg:px-32">
-            <p className="text-center text-3xl font-bold text-white">Sign Up</p>
+            <p className="text-center text-3xl font-bold text-white">Tell us a little about you</p>
             <form
               className="flex flex-col pt-3 md:pt-8"
               onSubmit={formik.handleSubmit}
@@ -77,7 +76,7 @@ const SignUp = () => {
               <div className="flex flex-col pt-4">
                 <FieldName>
                   {" "}
-                  Username{" "}
+                  username{" "}
                   {formik.errors.username ? (
                     <ErrorMessage>{formik.errors.username}</ErrorMessage>
                   ) : null}
@@ -92,75 +91,67 @@ const SignUp = () => {
                   value={formik.values.username}
                 />
               </div>
+
               <div className="flex flex-col pt-4">
                 <FieldName>
                   {" "}
-                  Email{" "}
-                  {formik.errors.email ? (
-                    <ErrorMessage>{formik.errors.email}</ErrorMessage>
+                  Team{" "}
+                  {formik.errors.team ? (
+                    <ErrorMessage>{formik.errors.team}</ErrorMessage>
                   ) : null}
                 </FieldName>
                 <Input
-                  placeholder="your@email.com"
-                  id="email"
-                  name="email"
-                  type="email"
+                  placeholder="team"
+                  id="team"
+                  name="team"
+                  type="team"
                   onChange={formik.handleChange}
-                  value={formik.values.email}
+                  value={formik.values.team}
                 />
               </div>
 
               <div className="flex flex-col pt-4">
                 <FieldName>
                   {" "}
-                  Full Name{" "}
-                  {formik.errors.email ? (
-                    <ErrorMessage>{formik.errors.email}</ErrorMessage>
+                  what You do{" "}
+                  {formik.errors.role ? (
+                    <ErrorMessage>{formik.errors.role}</ErrorMessage>
                   ) : null}
                 </FieldName>
                 <Input
-                  id="fullname"
-                  name="fullname"
+                  placeholder="role"
+                  id="role"
+                  name="role"
                   onChange={formik.handleChange}
-                  value={formik.values.fullname}
+                  value={formik.values.role}
                 />
               </div>
 
               <div className="flex flex-col pt-4">
                 <FieldName>
                   {" "}
-                  Password{" "}
-                  {formik.errors.password ? (
-                    <ErrorMessage>{formik.errors.password}</ErrorMessage>
+                  cool stuff about yourself{" "}
+                  {formik.errors.info ? (
+                    <ErrorMessage>{formik.errors.info}</ErrorMessage>
                   ) : null}
                 </FieldName>
-                <Input
-                  placeholder="Password"
-                  id="password"
-                  name="password"
-                  type="password"
+                <textarea
+                  placeholder="info"
+                  id="info"
+                  name="info"
+                  cols="180"
+                  className="p-2"
                   onChange={formik.handleChange}
-                  value={formik.values.password}
+                  value={formik.values.info}
                 />
               </div>
 
-              <div className="flex flex-col pt-4">
-                <FieldName> Confirm Password </FieldName>
-                <Input
-                  placeholder="Password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type="password"
-                  onChange={formik.handleChange}
-                  value={formik.values.confirmPassword}
-                />
-              </div>
               <button
                 type="submit"
-                defaultValue="Sign Up"
+                defaultValue="Update"
                 className="bg-sp-green text-white font-bold text-lg  p-2 mt-8"
               >
-                {loading ? <ClipLoader color="#ffffff" size={25} /> : "Sign Up"}
+                {loading ? <ClipLoader color="#ffffff" size={25} /> : "Submit"}
               </button>
               <div className="text-center">
                 {errorMessage ? (
@@ -168,19 +159,7 @@ const SignUp = () => {
                 ) : null}
               </div>
             </form>
-            <div className="text-center pt-12 pb-0 text-white">
-              <p>
-                Already have an account{" "}
-                <Link
-                  to="/signin"
-                  className="underline font-semibold text-white"
-                >
-                  Sign in here.
-                </Link>
-              </p>
-            </div>
           </div>
-          <GoogleAuth />
         </div>
         {/* Image Section */}
         <div
@@ -201,7 +180,7 @@ const ErrorMessage = ({ children }) => (
 );
 
 const FieldName = ({ children }) => (
-  <label htmlFor="email" className="text-lg text-white">
+  <label htmlFor="email" className="text-md text-white">
     {children}
   </label>
 );
@@ -213,4 +192,4 @@ const Input = (props) => (
   />
 );
 
-export default SignUp;
+export default UpdateUser;

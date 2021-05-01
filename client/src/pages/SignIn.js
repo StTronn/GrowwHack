@@ -4,6 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import axios from "axios";
 import { URL } from "../utils/Routes";
+import GoogleAuth from "../components/GoogleAuth";
 import { User } from "../context/user";
 
 const validate = (values) => {
@@ -23,7 +24,8 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
   const { user, dispatch } = useContext(User);
-  const HandleSignUp = async (values) => {
+
+  const HandleSignIn = async (values) => {
     const endpoint = "/auth/login";
     const target = URL + endpoint;
     try {
@@ -47,7 +49,7 @@ const SignIn = () => {
     },
     validate,
     onSubmit: (values) => {
-      HandleSignUp(values);
+      HandleSignIn(values);
     },
   });
   return (
@@ -111,6 +113,9 @@ const SignIn = () => {
                 ) : null}
               </div>
             </form>
+            <div style={{display:'grid',justifyItems:'center',padding:'20px 0'}}>
+              <GoogleAuth />
+            </div>
             <div className="text-center pt-12 pb-0 text-white">
               <p>
                 Don't have an account{" "}

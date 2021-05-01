@@ -3,12 +3,16 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import connectDB from "./models";
+import passport from "passport";
+
 import errorHandler from "./middleware/errorHandler";
 import authenticate from "./middleware/auth";
+
 import auth from "./routes/auth";
 import room from "./routes/room";
 import comment from "./routes/comment";
-import passport from "passport";
+import team from "./routes/team";
+
 
 const app = express();
 
@@ -24,6 +28,7 @@ app.use(passport.initialize());
 app.use("/auth", auth);
 app.use("/room", room);
 app.use("/comment", comment);
+app.use("/team", team);
 
 connectDB();
 
