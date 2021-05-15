@@ -9,6 +9,7 @@ import Books from "./pages/Books";
 import UpdateUser from "./pages/UpdateUser";
 import Landing from "./pages/Landing";
 import WebTeam from "./pages/WebTeam";
+import AppTeam from "./pages/AppTeam";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -37,8 +38,14 @@ function App() {
             <Route path="/web">
               <WebTeam />
             </Route>
+            <Route path="/app">
+              <AppTeam />
+            </Route>
             <Route path="/books">
               <Books />
+            </Route>
+            <Route path="/area120">
+              <ProjectRoom />
             </Route>
             <Route path="/">
               <Landing />

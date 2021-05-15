@@ -6,10 +6,13 @@ const NavBar = () => {
     <div className="fixed bg-transparent py-4 z-50" style={{ width: "100vw" }}>
       <div className="grid text-base font-semibold text-white  justify-items-end px-8 ">
         <div className="grid w-auto grid-flow-col gap-x-4 ">
+          <Link to="/area120">
+            <span className="cursor-pointer"> Area120</span>
+          </Link>
           <Link to="/web">
             <span className="cursor-pointer"> Web</span>
           </Link>
-          <Link to="/">
+          <Link to="/app">
             <span className="cursor-pointer"> App</span>
           </Link>
           <Link to="/">
