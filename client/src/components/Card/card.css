@@ -5,12 +5,6 @@
   justify-items: center;
 }
 
-@media (max-width:800px) {
-    .cardGrid{
-        grid-template-columns: 1fr;
-    }
-}
-
 .card {
   width: 280px;
   height: 380px;
@@ -18,6 +12,28 @@
   box-shadow: 12px 12px 24px #080808, -12px -12px 24px #222222;
   display: grid;
   grid-template-rows: 280px 3fr 1fr;
+}
+
+.card:first-child {
+  justify-self: start;
+}
+
+.card:nth-child(3n){
+  justify-self: end;
+}
+
+@media (max-width: 800px) {
+  .cardGrid {
+    grid-template-columns: 1fr;
+  }
+
+.card:first-child {
+  justify-self: center;
+}
+
+.card:nth-child(3n){
+  justify-self: center;
+}
 }
 
 .cardImg {
@@ -29,21 +45,20 @@
   border-top-right-radius: 21px;
 }
 
-.cardDesc{
-    padding:10px;
-
+.cardDesc {
+  padding: 10px;
 }
 
-.cardTitle{
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.0em;
-    color: white;
+.cardTitle {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0em;
+  color: white;
 }
 
-.cardAlbum{
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.0em;
-    color:#1db954;
+.cardAlbum {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0em;
+  color: #1db954;
 }

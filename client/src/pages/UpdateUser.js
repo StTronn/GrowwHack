@@ -3,8 +3,11 @@ import { useFormik } from "formik";
 import authRequest from "../utils/authRequest";
 import { Link, useHistory } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
-import axios from "axios";
+
+import Dropdown from "../components/Dropdown";
+
 import { URL } from "../utils/Routes";
+
 import { User } from "../context/user";
 
 const validate = (values) => {
@@ -17,10 +20,10 @@ const validate = (values) => {
     errors.team = "required";
   }
   if (!values.info) {
-    errors.info= "required";
+    errors.info = "required";
   }
   if (!values.role) {
-    errors.role="required";
+    errors.role = "required";
   }
   return errors;
 };
@@ -30,7 +33,7 @@ const UpdateUser = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
   const { state, dispatch } = useContext(User);
-  const {user} = state;
+  const { user } = state;
 
 
   const HandleUpdate = async (values) => {
@@ -38,9 +41,9 @@ const UpdateUser = () => {
     const target = URL + endpoint;
     try {
       setLoading(true);
-      values.email = user.email; 
-      const res = await authRequest(endpoint, {updatedUser:values});
-      const UpdatedUser = res.data.user;
+      values.email = user.email;
+      const res = await authRequest(endpoint, { updatedUser: values });
+      const UpdatedUser = res.user;
       dispatch({ type: "SET_USER", payload: UpdatedUser });
       history.push("/");
     } catch (err) {
@@ -53,9 +56,9 @@ const UpdateUser = () => {
   const formik = useFormik({
     initialValues: {
       username: "",
-      team: "",
-      role:"",
-      info:""
+      team: "other",
+      role: "",
+      info: "",
     },
     validate,
     onSubmit: (values) => {
@@ -100,14 +103,11 @@ const UpdateUser = () => {
                     <ErrorMessage>{formik.errors.team}</ErrorMessage>
                   ) : null}
                 </FieldName>
-                <Input
-                  placeholder="team"
-                  id="team"
-                  name="team"
-                  type="team"
-                  onChange={formik.handleChange}
-                  value={formik.values.team}
-                />
+                <select className="appearance-none shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" value={formik.values.team} onChange={formik.handleChange} name="team" id="team">
+                  <option value="app" label="app" />
+                  <option value="web" label="web" />
+                  <option value="other" label="other" />
+                </select>
               </div>
 
               <div className="flex flex-col pt-4">

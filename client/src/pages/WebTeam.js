@@ -5,7 +5,7 @@ import authRequest from '../utils/authRequest';
 
 import Card from '../components/Card'
 
-const WebTeam = (params) => {
+const WebTeam = () => {
 
   useEffect(() => {
     const getData = async () => {
@@ -38,7 +38,7 @@ const WebTeam = (params) => {
 const Banner = styled.div`
   height: 30vh;
   font-size: 46px;
-  padding-left: 90px;
+  padding-left: 80px;
   padding-top: 80px;
   font-weight: 800;
   letter-spacing: 0.04rem;
@@ -55,6 +55,7 @@ const Banner = styled.div`
 
 const CardContainer = styled.div`
   display: grid;
+  padding:0 80px;
   grid-template-columns: 1fr 1fr 1fr;
   row-gap: 80px;
   justify-items: center;

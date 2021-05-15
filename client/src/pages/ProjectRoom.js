@@ -3,13 +3,13 @@ import styled from "styled-components";
 
 import authRequest from "../utils/authRequest";
 
-import Loading from "../pages/Loading";
-import NotFound from "../pages/NotFound";
+import Loading from "./Loading";
+import NotFound from "./NotFound";
 
 import HomeBanner from "../components/HomeBanner";
 import Room  from "../components/RoomCard";
 
-const Home = () => {
+const ProjectRoom = () => {
   const [myRooms, setMyRooms] = useState([]);
   const [allRooms, setAllRooms] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -81,4 +81,4 @@ const ProjectCardGrid = styled.div`
   justify-content:center;
 
 `
-export default Home;
+export default ProjectRoom;
