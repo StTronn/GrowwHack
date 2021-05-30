@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+.MuiMenu-paper {
+  background-color: #151515;
+  /* top: 45px;
+  left: 1187px;
+  width: 50px */
+}

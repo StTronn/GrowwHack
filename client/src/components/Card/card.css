@@ -12,13 +12,18 @@
   box-shadow: 12px 12px 24px #080808, -12px -12px 24px #222222;
   display: grid;
   grid-template-rows: 280px 3fr 1fr;
+  transition: transform .7s ease-in-out;
 }
 
-.card:first-child {
+/* .card:first-child {
+  justify-self: start;
+} */
+
+.card:nth-child(3n+1) {
   justify-self: start;
 }
 
-.card:nth-child(3n){
+.card:nth-child(3n) {
   justify-self: end;
 }
 
@@ -26,14 +31,12 @@
   .cardGrid {
     grid-template-columns: 1fr;
   }
-
-.card:first-child {
-  justify-self: center;
-}
-
-.card:nth-child(3n){
-  justify-self: center;
-}
+  .card:first-child {
+    justify-self: center;
+  }
+  .card:nth-child(3n) {
+    justify-self: center;
+  }
 }
 
 .cardImg {
@@ -47,18 +50,37 @@
 
 .cardDesc {
   padding: 10px;
+  text-align: center;
 }
 
 .cardTitle {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: 0em;
   color: white;
+  text-transform: capitalize;
 }
 
 .cardAlbum {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0em;
   color: #1db954;
+  text-transform: capitalize;
+}
+
+.cardAlbuminfo {
+  display: none;
+}
+
+.card:hover .cardAlbuminfo {
+  display: block;
+  color: white;
+  font-size: 12px;
+}
+
+.card:hover {
+  height: 400px;
+  transform: scale(1.15);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
 }

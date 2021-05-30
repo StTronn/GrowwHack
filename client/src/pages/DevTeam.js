@@ -5,6 +5,7 @@ import authRequest from '../utils/authRequest';
 import DarkTemp from "../darkTemp.png"
 import CleanupImage from "../clean-up-temp.png"
 import Card from '../components/Card'
+
 const Cointainer = styled.div`
   min-height:100vh;
   padding: 80px 0; 
@@ -70,35 +71,33 @@ const CardContainer = styled.div`
     grid-template-columns: 1fr;
   }
 `
+
 const WebTeam = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await authRequest("/team/get?team=web");
+      const data = await authRequest("/team/get?team=other");
       if (data) setUsers(data);
     }
     getData();
   }, [])
 
   const [ users, setUsers ] = useState([]);
-  const handleCardInfo = (index) => {
-    console.log(index, users[ index ])
-  }
+
   return (
     <div>
       <div>
         <Banner >
-          Web Team
+          Dev Team
       </Banner>
         <CardContainer>
-          {users && users.map((user, index) =>
+          {users && users.map(user =>
 
             <Card img={user.avatar || 'https://source.unsplash.com/QckxruozjRg'}
               name={user.fullname}
               pos={user?.role || "Dev"}
               username={user.username}
-              info={user.info}
-              onClick={handleCardInfo(index)} />
+              info={user.info} />
 
           )}
         </CardContainer>

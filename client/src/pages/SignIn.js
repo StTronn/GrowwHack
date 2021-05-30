@@ -21,8 +21,8 @@ const validate = (values) => {
 
 const SignIn = () => {
   const history = useHistory();
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(false);
+  const [ loading, setLoading ] = useState(false);
+  const [ errorMessage, setErrorMessage ] = useState(false);
   const { user, dispatch } = useContext(User);
 
   const HandleSignIn = async (values) => {
@@ -33,7 +33,7 @@ const SignIn = () => {
       const res = await axios.post(target, values);
       const user = res.data.user;
       dispatch({ type: "SET_USER", payload: user });
-      history.push("/");
+      user.role === "" ? window.location.href = "/updateuser" : window.location.href = "/";
       console.log(res.data);
     } catch (err) {
       console.log("error", err.response.data.message);
@@ -113,7 +113,7 @@ const SignIn = () => {
                 ) : null}
               </div>
             </form>
-            <div style={{display:'grid',justifyItems:'center',padding:'20px 0'}}>
+            <div style={{ display: 'grid', justifyItems: 'center', padding: '20px 0' }}>
               <GoogleAuth />
             </div>
             <div className="text-center pt-12 pb-0 text-white">

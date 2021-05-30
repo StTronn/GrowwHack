@@ -10,6 +10,7 @@ import UpdateUser from "./pages/UpdateUser";
 import Landing from "./pages/Landing";
 import WebTeam from "./pages/WebTeam";
 import AppTeam from "./pages/AppTeam";
+import DevTeam from "./pages/DevTeam";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -40,6 +41,9 @@ function App() {
             </Route>
             <Route path="/app">
               <AppTeam />
+            </Route>
+            <Route path="/dev">
+              <DevTeam />
             </Route>
             <Route path="/books">
               <Books />
