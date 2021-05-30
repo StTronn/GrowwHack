@@ -30,11 +30,12 @@ const validate = (values) => {
 
 const UpdateUser = () => {
   const history = useHistory();
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(false);
+  const [ loading, setLoading ] = useState(false);
+  const [ errorMessage, setErrorMessage ] = useState(false);
   const { state, dispatch } = useContext(User);
+  const [ photoFile, setPhotoFile ] = useState(null);
   const { user } = state;
-
+  const [ photoURL, setPhotoURL ] = useState(null);
 
   const HandleUpdate = async (values) => {
     const endpoint = "/auth/updateUser";
@@ -52,19 +53,37 @@ const UpdateUser = () => {
       setLoading(false);
     }
   };
-
+  const imageHandler = (e) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setPhotoFile(reader.result)
+      }
+    }
+    // reader.readAsDataURL(e.target.files[ 0 ])
+    setPhotoURL(reader.readAsDataURL(e.target.files[ 0 ]));
+    //console.log()
+    //console.log(photoFile)
+    // formik.values.img = photoFile;
+  };
   const formik = useFormik({
     initialValues: {
-      username: "",
-      team: "other",
-      role: "",
-      info: "",
+      username: user.username ? `${user.username}` : "",
+      team: `${user.team}`,
+      role: `${user.role}`,
+      info: `${user.info}`,
+      img: null,
     },
     validate,
     onSubmit: (values) => {
+      // formik.values.img = photoFile;
       HandleUpdate(values);
     },
   });
+  //formik.values.img = photoFile;
+  console.log(photoFile)
+  console.log(photoURL);
+  console.log(formik);
   return (
     <>
       <div className="w-full flex flex-wrap h-screen ">
@@ -75,8 +94,9 @@ const UpdateUser = () => {
             <form
               className="flex flex-col pt-3 md:pt-8"
               onSubmit={formik.handleSubmit}
+              style={{ paddingTop: "0px" }}
             >
-              <div className="flex flex-col pt-4">
+              <div className="flex flex-col pt-5">
                 <FieldName>
                   {" "}
                   username{" "}
@@ -95,7 +115,7 @@ const UpdateUser = () => {
                 />
               </div>
 
-              <div className="flex flex-col pt-4">
+              <div className="flex flex-col pt-5">
                 <FieldName>
                   {" "}
                   Team{" "}
@@ -110,7 +130,7 @@ const UpdateUser = () => {
                 </select>
               </div>
 
-              <div className="flex flex-col pt-4">
+              <div className="flex flex-col pt-5">
                 <FieldName>
                   {" "}
                   what You do{" "}
@@ -127,7 +147,7 @@ const UpdateUser = () => {
                 />
               </div>
 
-              <div className="flex flex-col pt-4">
+              <div className="flex flex-col pt-5">
                 <FieldName>
                   {" "}
                   cool stuff about yourself{" "}
@@ -143,6 +163,24 @@ const UpdateUser = () => {
                   className="p-2"
                   onChange={formik.handleChange}
                   value={formik.values.info}
+                />
+              </div>
+
+              <div className="flex flex-col pt-5">
+                <FieldName>
+                  {" "}
+                  Upload Your Image{" "}
+                  {formik.errors.img ? (
+                    <ErrorMessage>{formik.errors.img}</ErrorMessage>
+                  ) : null}
+                </FieldName>
+                <Input
+                  id="img"
+                  name="img"
+                  type="file"
+                  accept="image/*"
+                  onChange={(formik.handleChange), (imageHandler)}
+                  value={formik.values.img}
                 />
               </div>
 

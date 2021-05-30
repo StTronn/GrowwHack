@@ -17,7 +17,10 @@ const GoogleAuth = () => {
     axios.post(URL + "/auth/googleAuth", { token: userToken }).then((user) => {
       console.log(user.data);
       dispatch({ type: "SET_USER", payload: user.data });
+      user.data.role === "" ? window.location.href = "/updateuser" : window.location.href = "/";
+
     });
+
   }
 
   return (
@@ -26,7 +29,7 @@ const GoogleAuth = () => {
         clientId={clientID}
         buttonText="Login or Sign Up With Google"
         onSuccess={responseGoogle}
-        onFailure={()=>{}}
+        onFailure={() => { }}
         cookiePolicy={'single_host_origin'}
       />
     </div>
