@@ -56,7 +56,7 @@ passport.use(
 
 //check if the user has all the required info to 
 const completeInfo = (user) => {
-  if (!user.username || !user.team) return false;
+  if (!user.username && !user.team) return false;
   return true;
 }
 

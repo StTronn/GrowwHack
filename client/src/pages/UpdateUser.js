@@ -55,10 +55,10 @@ const UpdateUser = () => {
 
   const formik = useFormik({
     initialValues: {
-      username: "",
-      team: "other",
-      role: "",
-      info: "",
+      username: user.username,
+      team: user.team,
+      role: user.role,
+      info: user.info,
     },
     validate,
     onSubmit: (values) => {
